@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: moxie-nightly
+  namespace: moxie
+spec:
+  containers:
+    - name: moxie-nightly
+      image: "docker-registry.default.svc:5000/moxie/moxie-nightly:latest"
+      command: ["sleep", "infinity"]
+      env:
+        - name: VAULT_MOXIEDEV_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: vault-moxiedev-token
+              key: VAULT_MOXIEDEV_TOKEN
+  restartPolicy: Never

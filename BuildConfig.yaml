@@ -1,0 +1,35 @@
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+  labels:
+    app: "moxie-nightly"
+    app.kubernetes.io/instance: moxie
+  name: "moxie-nightly"
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: "moxie-nightly:latest"
+  resources: {}
+  nodeSelector:
+    kubernetes.io/os: linux
+  triggers:
+    - type: "ConfigChange"
+  source:
+    git:
+      ref: master
+      uri: https://gitea-labdroid.apps.ocp.labdroid.net/green/moxie-nightly
+    contextDir:
+    type: Git
+  strategy:
+    dockerStrategy:
+      from:
+        kind: DockerImage
+        name: fedora
+      forcePull: true
+      noCache: true
+    type: Docker
+status:
+  lastVersion: 0

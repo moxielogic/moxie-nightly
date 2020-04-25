@@ -1,0 +1,40 @@
+---
+- name: Build nightly moxie toolchains
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Login as admin
+      shell: |
+        oc -n moxie login -u system:admin
+
+    - name: Delete any existing moxie-nightly pod
+      shell: |
+        oc -n moxie \
+          delete pod moxie-nightly --grace-period=0 --ignore-not-found
+
+    - name: Template moxie-nightly pod
+      set_fact:
+        moxie_nightly_pod: "{{ lookup('file', 'moxie-nightly-pod.yml') }}"
+
+    - name: Create moxie-nightly pod
+      shell: |
+        echo {{ moxie_nightly_pod | quote }} | oc apply -f -
+
+    - name: Wait for moxie-nightly pod to start
+      shell: |
+        oc -n moxie \
+          get pod moxie-nightly -o jsonpath="{.status.phase}"
+      register: result
+      until: result.stdout == "Running"
+      retries: 60
+      delay: 10
+
+    - name: Run nightly job
+      shell: |
+        oc -n moxie exec moxie-nightly -- \
+          bash -c "/usr/bin/moxie-nightly.sh"
+
+    - name: Delete moxie-nighly pod
+      shell: |
+        oc -n moxie \
+          delete pod moxie-nightly --grace-period=0 --ignore-not-found
