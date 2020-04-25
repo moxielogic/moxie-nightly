@@ -20,7 +20,7 @@ spec:
   source:
     git:
       ref: master
-      uri: https://gitea-labdroid.apps.ocp.labdroid.net/green/moxie-nightly
+      uri: https://github.com/moxielogic/moxie-nightly
     contextDir:
     type: Git
   strategy:
