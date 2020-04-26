@@ -1,7 +1,7 @@
 ---
 - name: Build nightly moxie toolchains
   hosts: all
-  gather_facts: false
+  gather_facts: true
   tasks:
     - name: Login as admin
       shell: |
