@@ -4,8 +4,7 @@
   gather_facts: true
   tasks:
     - name: Login as admin
-      shell: |
-        oc -n moxie login -u system:admin
+      command: oc -n moxie login -u system:admin
 
     - name: Delete any existing moxie-nightly pod
       shell: |
