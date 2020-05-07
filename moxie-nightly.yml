@@ -3,7 +3,7 @@
   hosts: all
   gather_facts: true
   environment:
-    KUBECONFIG: /root/ocp4.4/i/auth/kubeconfig
+    KUBECONFIG: "${HOME}/.kubeconfig"
   tasks:
 
     - name: Login as admin
