@@ -2,7 +2,10 @@
 - name: Build nightly moxie toolchains
   hosts: all
   gather_facts: true
+  environment:
+    KUBECONFIG: /root/ocp4.4/i/auth/kubeconfig
   tasks:
+
     - name: Login as admin
       command: oc -n moxie login -u system:admin
 
