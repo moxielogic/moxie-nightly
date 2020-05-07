@@ -4,10 +4,8 @@
   gather_facts: true
   environment:
     KUBECONFIG: "${HOME}/.kubeconfig"
-  tasks:
 
-    - name: Login as admin
-      command: oc -n moxie login -u system:admin
+  tasks:
 
     - name: Delete any existing moxie-nightly pod
       shell: |
