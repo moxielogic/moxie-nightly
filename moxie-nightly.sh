@@ -4,7 +4,7 @@ set -x
 
 echo $(pwd)
 
-SECRETS=$(curl -H "X-Vault-Token: $VAULT_MOXIEDEV_TOKEN" -X GET https://vault.home.labdroid.net/v1/secret/moxiedev)
+SECRETS=$(curl -H "X-Vault-Token: $VAULT_MOXIEDEV_TOKEN" -X GET https://vault-labdroid.apps.ocp.labdroid.net/v1/secret/moxiedev)
 echo $SECRETS | (umask 077 && jq -r .data.id_moxiedev_rsa > /tmp/id_rsa)
 
 if [ $(cat /tmp/id_rsa) = "null" ]; then
