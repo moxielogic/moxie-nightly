@@ -11,7 +11,7 @@
       shell: |
         oc -n moxie \
           delete pod moxie-nightly --grace-period=0 --ignore-not-found
-
+  
     - name: Template moxie-nightly pod
       set_fact:
         moxie_nightly_pod: "{{ lookup('file', 'moxie-nightly-pod.yml') }}"
@@ -38,3 +38,7 @@
       shell: |
         oc -n moxie \
           delete pod moxie-nightly --grace-period=0 --ignore-not-found
+      retries: 3
+      delay: 5
+      register: result
+      until: result.rc == 0
