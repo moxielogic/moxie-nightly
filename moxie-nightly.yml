@@ -39,6 +39,6 @@
         oc -n moxie \
           delete pod moxie-nightly --grace-period=0 --ignore-not-found
       retries: 3
-      delay: 5
+      delay: 30
       register: result
       until: result is not failed
